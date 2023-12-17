@@ -1,46 +1,31 @@
 import 'package:flutter/material.dart';
 import 'deck.dart';
+import 'navigation/main_screen.dart';
+import 'theme.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
+
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.light);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flash Card App',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 38, 6, 97)),
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-
-
-class MyHomePage extends StatelessWidget {
-  final Map<String, String> cardTexts = {
-    'abacus': 'frame with balls for calculating',
-    'harrow': 'to distress create stress or torment',
-    'fatuous': 'without sense foolish self-satisfaction',
-    'deniz' : 'bitch ass nigga'
-    // Add as many pairs as you like
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FlashCardDeck(
-        numberOfCards: cardTexts.length,
-        cardTexts: cardTexts,
-        cardWidth: MediaQuery.of(context).size.width *0.9,  // Adjust the card width as needed
-      ),
-    );
+    return ValueListenableBuilder<ThemeMode>(
+        valueListenable: themeNotifier,
+        builder: (_, ThemeMode currentMode, __) {
+          return MaterialApp(
+            title: 'QuizPilot',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData.from(colorScheme: myLightModeColorScheme),
+            darkTheme: ThemeData.from(colorScheme: myDarkModeColorScheme),
+            themeMode: currentMode,
+            home: MainScreen(),
+          );
+        });
   }
 }
