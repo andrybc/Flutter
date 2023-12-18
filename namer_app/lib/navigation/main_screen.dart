@@ -95,36 +95,44 @@ class _MainScreenState extends State<MainScreen> {
           : null,
       body: Row(
         children: [
-          if (MediaQuery.of(context).size.width >= 640)
+          if (MediaQuery.of(context).size.width >= 600)
             NavigationRail(
               onDestinationSelected: (int index) {
                 setState(() {
                   _currentIndex = index;
                 });
               },
+
               selectedIndex: _currentIndex,
               destinations: const [
                 NavigationRailDestination(
-                    icon: Icon(Icons.home), label: Text('Home')),
+                    icon: Icon(Icons.home, color: Colors.grey),
+                    label: Text('Home')),
                 NavigationRailDestination(
-                    icon: Icon(Icons.feed), label: Text('Feed')),
+                    icon: Icon(Icons.feed, color: Colors.grey),
+                    label: Text('Feed')),
                 NavigationRailDestination(
-                    icon: Icon(Icons.favorite), label: Text('Favorites')),
+                    icon: Icon(Icons.favorite, color: Colors.grey),
+                    label: Text('Favorites')),
                 NavigationRailDestination(
-                    icon: Icon(Icons.settings), label: Text('Settings')),
+                    icon: Icon(Icons.settings, color: Colors.grey),
+                    label: Text('Settings')),
               ],
 
               labelType: NavigationRailLabelType.all,
-              selectedLabelTextStyle: const TextStyle(
-                color: Colors.lightBlueAccent,
+              selectedLabelTextStyle: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
               ),
-
-              unselectedLabelTextStyle: const TextStyle(),
+              selectedIconTheme: IconThemeData(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              // unselectedIconTheme: IconThemeData(color: Colors.grey),
+              unselectedLabelTextStyle: TextStyle(color: Colors.grey),
               // Called when one tab is selected
               leading: Column(
                 children: const [
                   SizedBox(
-                    height: 8,
+                    height: 18,
                   ),
                   CircleAvatar(
                     radius: 20,
